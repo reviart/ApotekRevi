@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h4>Employee Data</h4>
+    <h4 style="margin-top: 10px;">List Employee</h4><br>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
