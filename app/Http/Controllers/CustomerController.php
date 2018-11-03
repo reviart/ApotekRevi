@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -13,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        return view('customers.index', ['customers' => Customer::all()]);
     }
 
     /**
@@ -23,7 +25,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -34,7 +36,22 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:customers',
+            'phone_number' => 'required|numeric|digits_between:11,14',
+            'address' => 'required|string|max:191'
+        ]);
+
+        $customer = new Customer;
+        $customer->name = strtoupper($request->name);
+        $customer->email = $request->email;
+        $customer->phone_number = $request->phone_number;
+        $customer->address = $request->address;
+        $customer->user_id = Auth::id();
+        $customer->save();
+
+        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
     }
 
     /**
@@ -45,7 +62,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('customers.show', ['customer' => Customer::findOrFail($id)]);
     }
 
     /**
@@ -56,7 +73,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('customers.edit', ['customer' => Customer::findOrFail($id)]);
     }
 
     /**
@@ -68,7 +85,22 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:customers',
+            'phone_number' => 'required|numeric|digits_between:11,14',
+            'address' => 'required|string|max:191'
+        ]);
+
+        $customer = Customer::findOrFail($id);
+        $customer->name = strtoupper($request->name);
+        $customer->email = $request->email;
+        $customer->phone_number = $request->phone_number;
+        $customer->address = $request->address;
+        $customer->user_id = Auth::id();
+        $customer->save();
+
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
     }
 
     /**
@@ -79,6 +111,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Customer::findOrFail($id)->delete();
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
     }
 }
