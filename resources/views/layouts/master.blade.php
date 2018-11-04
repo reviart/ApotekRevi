@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" type="image/png" href="https://seeklogo.com/images/P/pharmacy-logo-4729C66E18-seeklogo.com.png"/>
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Apotek Revi</title>
 
     <!-- Bootstrap core CSS -->
     <link href="http://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -58,7 +58,7 @@
                 <span>Start shopping</span>
               </h6>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('products.index')}}">
                   <span data-feather="package"></span>
                   Products
                 </a>
