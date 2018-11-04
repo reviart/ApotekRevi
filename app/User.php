@@ -34,6 +34,9 @@ class User extends Authenticatable
     public function categories(){
         return $this->hasMany('App\Category');
     }
+    public function units(){
+        return $this->hasMany('App\Unit');
+    }
     public function products(){
         return $this->hasMany('App\Product');
     }
