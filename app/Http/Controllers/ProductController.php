@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Product;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return view('products.index', ['products' => Product::all()]);
     }
 
     /**
@@ -23,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create', ['categories' => Category::all()]);
     }
 
     /**
@@ -34,7 +37,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->generate_product($request, 0);
+        return redirect()->route('products.index')->with('success', 'Product added successfully!');
     }
 
     /**
@@ -45,7 +49,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('products.show', ['product' => Product::findOrFail($id)]);
     }
 
     /**
@@ -56,7 +60,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('products.edit', ['product' => Product::findOrFail($id), 'categories' => Category::all()]);
     }
 
     /**
@@ -68,7 +72,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->generate_product($request, $id);
+        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -79,6 +84,28 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::findOrFail($id)->delete();
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+    }
+
+    function generate_product($request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:191',
+            'description' => 'required|max:100',
+            'stock' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required'
+        ]);
+
+        $id==0 ? $product = new Product : $product = Product::findOrFail($id);
+        
+        $product->name = strtoupper($request->name);
+        $product->description = $request->description;
+        $product->stock = $request->stock;
+        $product->price = $request->price;
+        $product->user_id = Auth::id();
+        $product->category_id = $request->category_id;
+        $product->save();
     }
 }

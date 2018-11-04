@@ -1,0 +1,45 @@
+@extends('layouts.master')
+@section('content')
+	<h4 style="margin-top: 10px; margin-bottom: 25px;">Detail Product</h4>
+
+	<a href="{{route('products.create')}}" class="btn btn-primary btn-sm" style="margin: 10px 0px;">Add product</a>
+	<td width="5%"><a href="" class="btn btn-success btn-sm">Add to cart</a></td>
+	@if(Auth::user()->status == 1)
+	<td width="5%"><a href="{{route('products.edit', [$product->id])}}" class="btn btn-warning btn-sm">Edit</a></td>
+	@endif
+	<button type="button" name="button" onclick="history.back()" class="btn btn-default btn-sm">Back</button>
+	<table class="table table-hover table-sm table-striped">
+	    <tr>
+	    	<th style="width: 200px;">Product category</th>
+	    	<td>{{$product->category->name}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Name</th>
+	    	<td>{{$product->name}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Description</th>
+	    	<td>{{$product->description}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Stock</th>
+	    	<td>{{$product->stock}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Price</th>
+	    	<td>Rp. {{number_format($product->price, 2, ',', '.')}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Created by</th>
+	    	<td>{{$product->user->name}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Created at</th>
+	    	<td>{{$product->created_at->format('d, M Y H:i')}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Updated at</th>
+	    	<td>{{$product->updated_at->format('d, M Y H:i')}}</td>
+	    </tr>
+	</table>
+@endsection
