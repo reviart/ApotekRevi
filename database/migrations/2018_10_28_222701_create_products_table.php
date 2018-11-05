@@ -21,10 +21,12 @@ class CreateProductsTable extends Migration
             $table->float('price', 15, 2);
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('category_id')->nullable();
+            $table->unsignedInteger('unit_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('unit_id')->references('id')->on('units');
         });
     }
 

@@ -24,3 +24,5 @@ Route::resource('categories', 'CategoryController');
 Route::resource('units', 'UnitController');
 Route::resource('products', 'ProductController');
 Route::resource('orders', 'OrderController');
+
+Route::post('/add-to-cart/{product_id}', 'ProductController@add_to_cart')->name('products.add_to_cart');

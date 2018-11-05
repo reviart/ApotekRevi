@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Product;
 use App\Category;
+use App\Unit;
+use App\Cart;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -26,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create', ['categories' => Category::all()]);
+        return view('products.create', ['categories' => Category::all(), 'units' => Unit::all()]);
     }
 
     /**
@@ -60,7 +62,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('products.edit', ['product' => Product::findOrFail($id), 'categories' => Category::all()]);
+        return view('products.edit', ['product' => Product::findOrFail($id), 'categories' => Category::all(), 'units' => Unit::all()]);
     }
 
     /**
@@ -95,7 +97,8 @@ class ProductController extends Controller
             'description' => 'required|max:100',
             'stock' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'unit_id' => 'required'
         ]);
 
         $id==0 ? $product = new Product : $product = Product::findOrFail($id);
@@ -106,6 +109,17 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->user_id = Auth::id();
         $product->category_id = $request->category_id;
+        $product->unit_id = $request->unit_id;
         $product->save();
+    }
+
+    public function add_to_cart($id)
+    {
+        $cart = new Cart;
+        $cart->product_id = $id;
+        $cart->quantity = 0;
+        $cart->save();
+
+        return redirect()->back();
     }
 }

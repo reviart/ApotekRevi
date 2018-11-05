@@ -27,6 +27,7 @@
               <th>Name</th>
               <th>Category</th>
               <th>Stock</th>
+              <th>Unit</th>
               <th>Price</th>
               <th colspan="4">Actions</th>
             </tr>
@@ -38,8 +39,17 @@
               <td>{{$product->name}}</td>
               <td>{{$product->category->name}}</td>
               <td>{{$product->stock}}</td>
+              <td>{{$product->unit->name}}</td>
               <td>Rp. {{number_format($product->price, 2, ',', '.')}}</td>
-              <td width="5%"><a href="" class="btn btn-success btn-sm">Add to cart</a></td>
+              <td width="5%">
+                @php
+                  $product->cart ? $option = 'disabled' : $option = '';
+                @endphp
+                <form action="{{route('products.add_to_cart', [$product->id])}}" method="POST">
+                  @csrf
+                  <button type="submit" name="button" class="btn btn-success btn-sm" {{$option}}>Add to cart</button>
+                </form>
+              </td>
               <td width="5%"><a href="{{route('products.show', [$product->id])}}" class="btn btn-primary btn-sm">Detail</a></td>
               @if(Auth::user()->status == 1)
                 <td width="5%"><a href="{{route('products.edit', [$product->id])}}" class="btn btn-warning btn-sm">Edit</a></td>

@@ -2,12 +2,27 @@
 @section('content')
 	<h4 style="margin-top: 10px; margin-bottom: 25px;">Detail Product</h4>
 
-	<a href="{{route('products.create')}}" class="btn btn-primary btn-sm" style="margin: 10px 0px;">Add product</a>
-	<td width="5%"><a href="" class="btn btn-success btn-sm">Add to cart</a></td>
-	@if(Auth::user()->status == 1)
-	<td width="5%"><a href="{{route('products.edit', [$product->id])}}" class="btn btn-warning btn-sm">Edit</a></td>
-	@endif
-	<button type="button" name="button" onclick="history.back()" class="btn btn-default btn-sm">Back</button>
+	<table>
+		<tr>
+			<td><a href="{{route('products.create')}}" class="btn btn-primary btn-sm" style="margin: 10px 0px;">Add product</a></td>
+			<td>
+				@php
+			      $product->cart ? $option = 'disabled' : $option = '';
+			    @endphp
+				<form action="{{route('products.add_to_cart', [$product->id])}}" method="POST">
+			        @csrf
+					<button type="submit" name="button" class="btn btn-success btn-sm" {{$option}}>Add to cart</button>
+				</form>
+			</td>
+			<td>
+				@if(Auth::user()->status == 1)
+				<a href="{{route('products.edit', [$product->id])}}" class="btn btn-warning btn-sm">Edit</a>
+				@endif
+			</td>
+			<td><button type="button" name="button" onclick="history.back()" class="btn btn-default btn-sm">Back</button></td>
+		</tr>	
+	</table>
+
 	<table class="table table-hover table-sm table-striped">
 	    <tr>
 	    	<th style="width: 200px;">Product category</th>
@@ -24,6 +39,10 @@
 	    <tr>
 	    	<th>Stock</th>
 	    	<td>{{$product->stock}}</td>
+	    </tr>
+	    <tr>
+	    	<th>Unit</th>
+	    	<td>{{$product->unit->name}}</td>
 	    </tr>
 	    <tr>
 	    	<th>Price</th>
