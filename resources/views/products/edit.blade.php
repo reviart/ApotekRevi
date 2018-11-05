@@ -43,6 +43,17 @@
 			</div>
 		</div>
 		<div class="form-group row">
+		    <label class="col-sm-2 col-form-label">Unit</label>
+		    <div class="col-sm-6">
+		    	<select class="form-control" name="category_id" required>
+                  <option value="{{ $product->unit->id }}">{{ $product->unit->name }}</option>
+                  @foreach($units as $unit)
+                    <option value="{{$unit->id}}">{{$unit->name}}</option>
+                  @endforeach
+                </select>
+			</div>
+		</div>
+		<div class="form-group row">
 		    <label class="col-sm-2 col-form-label">Price (Rupiah)</label>
 		    <div class="col-sm-6">
 		    	<input class="form-control" name="price" type="number" placeholder="155000" required value="{{$product->price}}">
