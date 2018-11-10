@@ -30,6 +30,8 @@ Route::prefix('carts')->group(function () {
 	Route::delete('{id}', 'CartController@destroy')->name('carts.destroy');
 });
 
-Route::resource('orders', 'OrderController');
+Route::resource('orders', 'OrderController')->only([
+	'index', 'show', 'store'
+]);
 
 Route::post('/add-to-cart/{product_id}', 'ProductController@add_to_cart')->name('products.add_to_cart');
