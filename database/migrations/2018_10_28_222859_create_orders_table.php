@@ -18,7 +18,9 @@ class CreateOrdersTable extends Migration
             $table->string('invoice');
             $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('user_id')->nullable();
-            $table->float('amount', 8, 2);
+            $table->float('total_cost', 15, 2);
+            $table->float('cash', 15, 2);
+            $table->float('remaining_cost', 15, 2);
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers');

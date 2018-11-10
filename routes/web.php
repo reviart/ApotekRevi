@@ -23,6 +23,13 @@ Route::resource('customers', 'CustomerController');
 Route::resource('categories', 'CategoryController');
 Route::resource('units', 'UnitController');
 Route::resource('products', 'ProductController');
+
+Route::prefix('carts')->group(function () {
+	Route::get('', 'CartController@index')->name('carts.index');
+	Route::put('update', 'CartController@update')->name('carts.update');
+	Route::delete('{id}', 'CartController@destroy')->name('carts.destroy');
+});
+
 Route::resource('orders', 'OrderController');
 
 Route::post('/add-to-cart/{product_id}', 'ProductController@add_to_cart')->name('products.add_to_cart');
