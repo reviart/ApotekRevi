@@ -18,4 +18,7 @@ class Product extends Model
 	public function cart(){
 		return $this->hasOne('App\Cart');
 	}
+	public function order_details(){
+		return $this->hasMany('App\OrderDetail');
+	}
 }

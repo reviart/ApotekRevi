@@ -59,7 +59,7 @@
           @endforeach
         </tbody>
       </table>
-    </div>
+    </div><br>
     
     <h4>Transaction</h4><br>
 
@@ -88,7 +88,7 @@
       <div class="form-group row">
           <label class="col-sm-2 col-form-label">Total cost</label>
           <div class="col-sm-6">
-            <input class="form-control" value="Rp. {{$total_cost}},-" readonly>
+            <input class="form-control" name="total_cost" value="{{$total_cost}}" readonly>
           </div>
       </div>
       <div class="form-group row">
