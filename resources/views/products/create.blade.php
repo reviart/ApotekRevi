@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<div class="form-group row">
-		    <label class="col-sm-2 col-form-label">Price (Rupiah)</label>
+		    <label class="col-sm-2 col-form-label">Price/unit</label>
 		    <div class="col-sm-6">
 		    	<input class="form-control" name="price" type="number" placeholder="ex: 155000">
 			</div>

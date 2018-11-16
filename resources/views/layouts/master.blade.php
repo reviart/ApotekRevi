@@ -76,17 +76,18 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{route('carts.index')}}">
                   <span data-feather="shopping-cart"></span>
-                  Carts
+                  Carts &nbsp;<span class="badge badge-pill badge-primary">X</span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{route('orders.index')}}">
-                  <span data-feather="layers"></span>
+                  <span data-feather="shopping-bag"></span>
                   Orders
                 </a>
               </li>
             </ul>
 
+            @if(Auth::user()->status == 1)
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>Saved reports</span>
             </h6>
@@ -110,6 +111,7 @@
                 </a>
               </li>
             </ul>
+            @endif
           </div>
         </nav>
 

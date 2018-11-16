@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Carbon\Carbon;
 use Auth;
 use App\Cart;
 use App\Order;
@@ -13,13 +15,22 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('orders.index', ['orders' => Order::all()]);
+        return view('orders.index', ['orders' => Order::orderBy('created_at', 'desc')->get()]);
     }
 
     /**
@@ -34,6 +45,8 @@ class OrderController extends Controller
             return redirect()->route('carts.index')->with('warning', 'The cart cannot be empty!');
         }elseif ($request->cash < $request->total_cost) {
             return redirect()->route('carts.index')->with('warning', 'The cash has to be at least total cost!');
+        }elseif ($request->total_cost <= 0){
+            return redirect()->route('carts.index')->with('warning', 'Finish your transaction!');
         }
         else{}
 
@@ -68,6 +81,17 @@ class OrderController extends Controller
         return view('orders.show', ['order_detail' => OrderDetail::all()->where('order_id',$id)]);
     }
 
+    //print the bill
+    public function print_bill($id)
+    {
+        $mytime = Carbon::now();
+        $waktu = $mytime->toDateTimeString();
+        $order = Order::where('id',$id)->first();
+        $order_detail = OrderDetail::where('order_id',$id)->get();
+        $pdf = PDF::loadView('orders.order-bill', compact('order_detail', 'waktu', 'order'));
+        return $pdf->stream($order->invoice.'.pdf');
+    }
+
     private function generate_order_detail()
     {
         $order_id = Order::all()->last()->id;
@@ -91,4 +115,24 @@ class OrderController extends Controller
         $invoice = "INV/".$phone_number."/".(Order::count()+1);
         return $invoice;
     }
+
+    // private function generate_email($request)
+    // {
+    //     $customer = Customer::findOrFail($request->customer_id);
+        
+    //     if ($customer->email) {
+    //         try{
+    //             \Mail::send('order-receipt', ['name' => $customer->name, 'body' => $price->price], function ($message) use ($request)
+    //             {
+    //                 $message->subject('Order receipt');
+    //                 $message->from('apotekrevi@risjadmr.com', 'Apotek Revi Farma');
+    //                 $message->to($customer->email);
+    //             });
+    //         }
+    //         catch (Exception $e){
+    //             return response (['status' => false,'errors' => $e->getMessage()]);
+    //         }
+    //     }
+
+    // }
 }

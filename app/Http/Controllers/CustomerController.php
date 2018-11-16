@@ -4,10 +4,21 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Customer;
+use App\Order;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customers.index', ['customers' => Customer::all()]);
+        return view('customers.index', ['customers' => Customer::orderBy('name', 'asc')->get()]);
     }
 
     /**
@@ -38,7 +49,6 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:customers',
             'phone_number' => 'required|numeric|digits_between:11,14',
             'address' => 'required|string|max:191'
         ]);
@@ -62,7 +72,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        return view('customers.show', ['customer' => Customer::findOrFail($id)]);
+        return view('customers.show', ['customer' => Customer::findOrFail($id), 'orders' => Order::where('customer_id', $id)->get()]);
     }
 
     /**
@@ -87,7 +97,6 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:customers',
             'phone_number' => 'required|numeric|digits_between:11,14',
             'address' => 'required|string|max:191'
         ]);

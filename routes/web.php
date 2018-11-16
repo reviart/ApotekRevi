@@ -33,5 +33,8 @@ Route::prefix('carts')->group(function () {
 Route::resource('orders', 'OrderController')->only([
 	'index', 'show', 'store'
 ]);
+Route::get('/{id}}', 'OrderController@print_bill')->name('orders.print_bill');
 
 Route::post('/add-to-cart/{product_id}', 'ProductController@add_to_cart')->name('products.add_to_cart');
+
+//search route

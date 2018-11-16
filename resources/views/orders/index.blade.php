@@ -23,14 +23,14 @@
         <thead>
           <tr style="text-align: center;">
             <th>#</th>
-            <th>Invoice</th>
-            <th>Name</th>
+            <th>Invoice No</th>
+            <th>Customer Name</th>
             <th>Admin</th>
             <th>Total Cost</th>
-            <th>Cash</th>
-            <th>Remaining Cost</th>
+            <th>Tend Cash</th>
+            <th>Change Due</th>
             <th>Created at</th>
-            <th>Action</th>
+            <th colspan="2">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +44,8 @@
             <td>Rp. {{number_format($order->cash, 2, ',', '.')}}</td>
             <td>Rp. {{number_format($order->remaining_cost, 2, ',', '.')}}</td>
             <td>{{$order->created_at->format('d, M Y H:i')}}</td>
-            <td width="5%"><a href="{{route('orders.show', [$order->id])}}" class="btn btn-primary btn-sm">Detail</a></td>
+            <td width="5%"><a href="{{route('orders.show', [$order->id])}}" class="btn btn-primary btn-sm"><span data-feather="eye"></span></a></td>
+            <td width="5%"><a href="{{route('orders.print_bill', [$order->id])}}" target="_blank" class="btn btn-primary btn-sm"><span data-feather="printer"></span></a></td>
           </tr>
           @endforeach
         </tbody>

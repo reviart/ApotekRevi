@@ -10,13 +10,23 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('carts.index', ['carts' => Cart::all(), 'customers' => Customer::all()]);
+        return view('carts.index', ['carts' => Cart::all(), 'customers' => Customer::orderBy('name', 'asc')->get()]);
     }
 
     /**
@@ -50,6 +60,6 @@ class CartController extends Controller
     public function destroy($id)
     {
         Cart::findOrFail($id)->delete();
-        return redirect()->route('carts.index')->with('success', 'Cart deleted successfully!');
+        return redirect()->route('carts.index')->with('success', 'Item remove successfully!');
     }
 }

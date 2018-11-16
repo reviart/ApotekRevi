@@ -25,7 +25,7 @@
 
 	<table class="table table-hover table-sm table-striped">
 	    <tr>
-	    	<th style="width: 200px;">Product category</th>
+	    	<th style="width: 200px;">Category</th>
 	    	<td>{{$product->category->name}}</td>
 	    </tr>
 	    <tr>
@@ -45,7 +45,7 @@
 	    	<td>{{$product->unit->name}}</td>
 	    </tr>
 	    <tr>
-	    	<th>Price</th>
+	    	<th>Price/unit</th>
 	    	<td>Rp. {{number_format($product->price, 2, ',', '.')}}</td>
 	    </tr>
 	    <tr>
