@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h4 style="margin-top: 10px;">List Customers</h4><br>
+    <h4 style="margin-top: 10px;">Customers</h4><br>
     
     @if (session('success'))
         <div class="alert alert-success">
@@ -18,13 +18,13 @@
     @else
     @endif
     
-    <a href="{{route('customers.create')}}" class="btn btn-success btn-sm" style="margin: 10px 0px;">Add customer</a>
+    <a href="{{route('customers.create')}}" class="btn btn-success btn-sm" style="margin: 10px 0px;">Create customer</a>
     <div class="table-responsive">
         <table class="table table-striped table-sm table-hover">
           <thead>
             <tr style="text-align: center;">
               <th>#</th>
-              <th>Name</th>
+              <th>Name {{-- <a href="#"><span data-feather="refresh-cw"></span></a> --}}</th>
               <th>Email</th>
               <th>Phone number</th>
               <th>Address</th>
@@ -39,14 +39,14 @@
               <td>{{$customer->email}}</td>
               <td>{{$customer->phone_number}}</td>
               <td>{{$customer->address}}</td>
-              <td width="5%"><a href="{{route('customers.show', [$customer->id])}}" class="btn btn-primary btn-sm">Detail</a></td>
-              <td width="5%"><a href="{{route('customers.edit', [$customer->id])}}" class="btn btn-warning btn-sm">Edit</a></td>
+              <td width="5%"><a href="{{route('customers.show', [$customer->id])}}" class="btn btn-primary btn-sm"><span data-feather="eye"></span></a></td>
+              <td width="5%"><a href="{{route('customers.edit', [$customer->id])}}" class="btn btn-warning btn-sm"><span data-feather="edit"></span></a></td>
               <td width="5%">
                 @if(Auth::user()->status == 1)
                 <form class="" action="{{route('customers.destroy', [$customer->id])}}" method="post">
                   @csrf
                   {{ method_field('DELETE') }}
-                  <button type="submit" name="button" onclick="return confirm('Are you sure to delete {{$customer->name}} ?')" class="btn btn-danger btn-sm">Delete</button>
+                  <button type="submit" name="button" onclick="return confirm('Are you sure to delete {{$customer->name}} ?')" class="btn btn-danger btn-sm"><span data-feather="trash-2"></span></button>
                 </form>
                 @endif
               </td>

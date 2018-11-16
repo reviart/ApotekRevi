@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-    <h4 style="margin-top: 10px;">Order detail</h4><br>
+    <h4 style="margin-top: 10px; margin-bottom: 25px;">Order detail</h4>
+    <button type="button" name="button" onclick="history.back()" class="btn btn-default btn-sm">Back</button><br><br>
     <div class="table-responsive">
       <table class="table table-striped table-sm table-hover">
         <thead>
@@ -10,9 +11,9 @@
             <th>Product Name</th>
             <th>Category</th>
             <th>Unit</th>
-            <th>Price</th>
+            <th>Price/unit</th>
             <th>Qty</th>
-            <th>Amount</th>
+            <th>Sub-total</th>
           </tr>
         </thead>
         <tbody>

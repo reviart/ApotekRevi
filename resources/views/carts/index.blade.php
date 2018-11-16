@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h4 style="margin-top: 10px;">Cart</h4><br>
+    <h4 style="margin-top: 10px;">Carts</h4><br>
     
     @if (session('success'))
         <div class="alert alert-success">
@@ -17,18 +17,28 @@
         </div>
     @else
     @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     
     <div class="table-responsive">
       <table class="table table-striped table-sm table-hover">
         <thead>
           <tr style="text-align: center;">
             <th>#</th>
-            <th>Name</th>
+            <th>Product Name</th>
             <th>Category</th>
             <th>Unit</th>
-            <th>Price</th>
+            <th>Price/unit</th>
             <th>Qty</th>
-            <th>Amount</th>
+            <th>Sub-total</th>
             <th colspan="2">Actions</th>
           </tr>
         </thead>
@@ -44,13 +54,13 @@
             <td>{{$cart->quantity}}</td>
             <td>Rp. {{ number_format(($cart->quantity)*($cart->product->price), 2, ',','.') }}</td>
             <td width="5%">
-              <button type="button" class="btn btn-warning btn-sm open-editCart" data-toggle="modal" data-target="#editModal" data-cart-qty="{{$cart->quantity}}" data-cart-id="{{$cart->id}}">Edit</button>
+              <button type="button" class="btn btn-warning btn-sm open-editCart" data-toggle="modal" data-target="#editModal" data-cart-qty="{{$cart->quantity}}" data-cart-id="{{$cart->id}}"><span data-feather="edit"></span></button>
             </td>
             <td width="5%">
               <form class="" action="{{route('carts.destroy', [$cart->id])}}" method="post">
                 @csrf
                 @method('DELETE')
-                <button type="submit" name="button" onclick="return confirm('Are you sure to delete cart {{$cart->product->name}} ?')" class="btn btn-danger btn-sm">Delete</button>
+                <button type="submit" name="button" onclick="return confirm('Are you sure to delete cart {{$cart->product->name}} ?')" class="btn btn-danger btn-sm"><span data-feather="trash-2"></span></button>
               </form>
             </td>
 
@@ -64,18 +74,9 @@
     <h4>Transaction</h4><br>
 
     <form method="POST" action="{{route('orders.store')}}">
-      @if ($errors->any())
-          <div class="alert alert-danger">
-              <ul>
-                  @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                  @endforeach
-              </ul>
-          </div>
-      @endif
       @csrf
       <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Customers</label>
+          <label class="col-sm-2 col-form-label">Customer</label>
           <div class="col-sm-6">
             <select class="form-control" name="customer_id" required>
               <option value="">choose customer</option>
@@ -92,7 +93,7 @@
           </div>
       </div>
       <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Cash</label>
+          <label class="col-sm-2 col-form-label">Tend Cash</label>
           <div class="col-sm-6">
             <input class="form-control" type="number" name="cash" placeholder="ex: 155000" required>
           </div>
@@ -120,7 +121,7 @@
             </div>
             <div class="modal-body">
               <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Quatity</label>
+                  <label class="col-sm-2 col-form-label">Quantity</label>
                   <div class="col-sm-10">
                     <input type="hidden" name="cart_id" id="cart_id">
                     <input class="form-control" name="qty" id="qty" type="number" required>

@@ -3,7 +3,7 @@
 @section('content')
     <h4 style="margin-top: 10px;">List Employee</h4><br>
     <div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm table-hover">
           <thead>
             <tr>
               <th>#</th>

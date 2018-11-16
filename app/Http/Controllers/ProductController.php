@@ -12,13 +12,23 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('products.index', ['products' => Product::all()]);
+        return view('products.index', ['products' => Product::orderBy('name', 'asc')->get()]);
     }
 
     /**
@@ -117,7 +127,7 @@ class ProductController extends Controller
     {
         $cart = new Cart;
         $cart->product_id = $id;
-        $cart->quantity = 0;
+        $cart->quantity = 1;
         $cart->save();
 
         return redirect()->back();

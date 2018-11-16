@@ -15,7 +15,7 @@
 		<div class="form-group row">
 		    <label class="col-sm-2 col-form-label">Name</label>
 		    <div class="col-sm-6">
-		    	<input class="form-control" name="name">
+		    	<input class="form-control" name="name" required>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -27,13 +27,13 @@
 		<div class="form-group row">
 		    <label class="col-sm-2 col-form-label">Phone number</label>
 		    <div class="col-sm-6">
-		    	<input class="form-control" name="phone_number" type="number" placeholder="ex: 0812xxxxxxxx">
+		    	<input class="form-control" name="phone_number" type="number" placeholder="ex: 0812xxxxxxxx" required>
 			</div>
 		</div>
 		<div class="form-group row">
 		    <label class="col-sm-2 col-form-label">Address</label>
 		    <div class="col-sm-6">
-		    	<input class="form-control" name="address">
+		    	<input class="form-control" name="address" required>
 			</div>
 		</div>
 		<div class="form-group row">

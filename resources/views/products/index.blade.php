@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h4 style="margin-top: 10px;">List Products</h4><br>
+    <h4 style="margin-top: 10px;">Products</h4><br>
     
     @if (session('success'))
         <div class="alert alert-success">
@@ -28,7 +28,7 @@
               <th>Category</th>
               <th>Stock</th>
               <th>Unit</th>
-              <th>Price</th>
+              <th>Price/unit</th>
               <th colspan="4">Actions</th>
             </tr>
           </thead>
@@ -50,14 +50,14 @@
                   <button type="submit" name="button" class="btn btn-success btn-sm" {{$option}}>Add to cart</button>
                 </form>
               </td>
-              <td width="5%"><a href="{{route('products.show', [$product->id])}}" class="btn btn-primary btn-sm">Detail</a></td>
+              <td width="3%"><a href="{{route('products.show', [$product->id])}}" class="btn btn-primary btn-sm"><span data-feather="eye"></span></a></td>
               @if(Auth::user()->status == 1)
-                <td width="5%"><a href="{{route('products.edit', [$product->id])}}" class="btn btn-warning btn-sm">Edit</a></td>
-                <td width="5%">
+                <td width="3%"><a href="{{route('products.edit', [$product->id])}}" class="btn btn-warning btn-sm"><span data-feather="edit"></span></a></td>
+                <td width="3%">
                   <form class="" action="{{route('products.destroy', [$product->id])}}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" name="button" onclick="return confirm('Are you sure to delete {{$product->name}} ?')" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" name="button" onclick="return confirm('Are you sure to delete {{$product->name}} ?')" class="btn btn-danger btn-sm"><span data-feather="trash-2"></span></button>
                   </form>
                 </td>
               @endif
