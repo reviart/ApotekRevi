@@ -46,7 +46,7 @@
 	    </tr>
 	    <tr>
 	    	<th>Price/unit</th>
-	    	<td>Rp. {{number_format($product->price, 2, ',', '.')}}</td>
+	    	<td>@money($product->price)</td>
 	    </tr>
 	    <tr>
 	    	<th>Created by</th>

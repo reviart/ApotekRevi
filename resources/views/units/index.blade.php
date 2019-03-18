@@ -34,7 +34,7 @@
           <tbody>
             @foreach($units as $key => $unit)
             <tr>
-              <td>{{$key+1}}</td>
+              <td></td>
               <td>{{$unit->name}}</td>
               <td>{{$unit->user->name}}</td>
               <td>{{$unit->created_at->format('d, M Y H:i')}}</td>

@@ -28,19 +28,33 @@
               <th>Category</th>
               <th>Stock</th>
               <th>Unit</th>
-              <th>Price/unit</th>
+              <th>Price(unit)</th>
               <th colspan="4">Actions</th>
             </tr>
           </thead>
           <tbody>
             @foreach($products as $key => $product)
             <tr>
-              <td>{{$key+1}}</td>
+              <td></td>
               <td>{{$product->name}}</td>
               <td>{{$product->category->name}}</td>
-              <td>{{$product->stock}}</td>
+
+              <?php
+                $stock = $product->stock;
+                if ($stock <= 25) {
+                  $badge = 'badge-danger';
+                }
+                elseif ($stock > 25 and $stock <= 50) {
+                  $badge = 'badge-warning';
+                }
+                else{
+                  $badge = 'badge-success';
+                }
+              ?>
+
+              <td><span class="badge {{$badge}}">{{$stock}}</span></td>
               <td>{{$product->unit->name}}</td>
-              <td>Rp. {{number_format($product->price, 2, ',', '.')}}</td>
+              <td>@money($product->price)</td>
               <td width="5%">
                 @php
                   $product->cart ? $option = 'disabled' : $option = '';
@@ -65,5 +79,6 @@
             @endforeach
           </tbody>
         </table>
+        {{ $products->links() }}
     </div>
 @endsection
