@@ -19,7 +19,7 @@
 				<a href="{{route('products.edit', [$product->id])}}" class="btn btn-warning btn-sm">Edit</a>
 				@endif
 			</td>
-			<td><button type="button" name="button" onclick="history.back()" class="btn btn-default btn-sm">Back</button></td>
+			<td><button type="button" name="button" onclick="history.back()" class="btn btn-dark btn-sm">Back</button></td>
 		</tr>	
 	</table>
 

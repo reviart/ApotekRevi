@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 	<h4 style="margin-top: 10px; margin-bottom: 25px;">Detail Customer</h4>
-	<button type="button" name="button" onclick="history.back()" class="btn btn-default btn-sm">Back</button>
+	<button type="button" name="button" onclick="history.back()" class="btn btn-dark btn-sm">Back</button>
 	<br><br>
 	<table class="table table-hover table-sm table-striped">
 	    <tr>
